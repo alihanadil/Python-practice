@@ -1,3 +1,4 @@
+# 3 casting examples
 x = 5
 y = 6.4
 z = 4.3

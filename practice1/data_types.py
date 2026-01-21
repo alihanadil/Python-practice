@@ -1,3 +1,4 @@
+# 5 examples of different data types in python
 x = 5
 y = "Hello, World!"
 z = ["apple", "banana", "cherry"]
