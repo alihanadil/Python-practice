@@ -3,10 +3,18 @@ x = 5
 y = "Hello, World!"
 X = 6 # X and x are different variables therefore x's value will be unchanged
 
-#2
-a = "John"
-# is the same as
-a = 'John'
+#2 legal variable names
+myvar = "John"
+my_var = "John"
+_my_var = "John"
+myVar = "John"
+MYVAR = "John"
+myvar2 = "John"
+
+#2.5 illegal variable names
+2myvar = "John"
+my-var = "John"
+my var = "John"
 
 #3 Python allows you to assign values to multiple variables in one line:
 q, w, e = "Orange", "Banana", "Cherry"

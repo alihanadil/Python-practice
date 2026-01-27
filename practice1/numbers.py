@@ -18,3 +18,10 @@ y = 5j
 
 print(type(x))
 print(type(y))
+
+#convert from int to complex:
+x = 2
+c = complex(x)
+
+print(c)
+print(type(c)) 
