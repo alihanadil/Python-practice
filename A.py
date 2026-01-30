@@ -1,11 +1,11 @@
-# n = int(input())
-# nums = list(map(int, input().split()))
-# freq, numr = 1, nums[0]
-# conts = []
-# for i in range(n):
-#     count = 0
-#     for j in range(n):
-#         if nums[i] == nums[j]: count +=1
-#     conts.append((nums[i], count))
-# print(conts)
+n = int(input())
+dors = {}
+for i in range(n):
+    els = input().split()
+    key = els[0]
+    value = int(els[1])
+    if key in dors: dors[key] += value
+    else: dors[key] = value
+for i, j in dors.items():
+    print(i, j)
 
