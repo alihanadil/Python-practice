@@ -6,6 +6,7 @@ for i in range(n):
     value = int(els[1])
     if key in dors: dors[key] += value
     else: dors[key] = value
+dors = dict(sorted(dors.items()))
 for i, j in dors.items():
     print(i, j)
 
