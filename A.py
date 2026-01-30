@@ -1,12 +1,8 @@
 n = int(input())
-dors = {}
+db = {}
 for i in range(n):
-    els = input().split()
-    key = els[0]
-    value = int(els[1])
-    if key in dors: dors[key] += value
-    else: dors[key] = value
-dors = dict(sorted(dors.items()))
-for i, j in dors.items():
-    print(i, j)
-
+    els = input().split(maxsplit=2)
+    keys = els[1]
+    if els[0] == "set": db[keys] = els[2]
+    if els[0] == "get":
+        print(db[keys] if keys in db else f"KE: no key {keys} found in the document")
