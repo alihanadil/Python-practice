@@ -1,13 +1,15 @@
 n = int(input())
-def isUsual(num):
-    while num % 2 == 0:
-        num //= 2
-    while num % 3 == 0:
-        num //= 3
-    while num % 5 == 0:
-        num //= 5
-    return num == 1
-if isUsual(n):
-    print("Yes")
-else:
-    print("No")
+def valid(num):
+    isEven = True
+    while(num > 0):
+        if num % 2 !=0:
+            isEven = False
+            break
+        san = num % 10
+        if (san % 2 == 0): num //= 10
+        else: 
+            isEven = False
+            break
+    if isEven: print("Valid")
+    else: print("Not valid")
+valid(n)
