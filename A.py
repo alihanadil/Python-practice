@@ -1,8 +1,15 @@
 n = int(input())
-db = {}
-for i in range(n):
-    els = input().split(maxsplit=2)
-    keys = els[1]
-    if els[0] == "set": db[keys] = els[2]
-    if els[0] == "get":
-        print(db[keys] if keys in db else f"KE: no key {keys} found in the document")
+def valid(num):
+    isEven = True
+    while(num > 0):
+        if num % 2 !=0:
+            isEven = False
+            break
+        san = num % 10
+        if (san % 2 == 0): num //= 10
+        else: 
+            isEven = False
+            break
+    if isEven: print("Valid")
+    else: print("Not valid")
+valid(n)
