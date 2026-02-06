@@ -1,35 +1,34 @@
-n = input()
-nums = ["ZER","ONE", "TWO", "THR", "FOU", "FIV", "SIX", "SEV", "EIG", "NIN"]
-act = ['+', '-', "*", '/']
-actual = ""
-len1 = 0
-for i in n:
-    if i not in act:
-        len1 +=1
-    if i in act:
-        actual = i
-        break
-num1 = n[:len1]
-real1 = ""
-real2 = ""
-num2 = n[len1+1:]
-for i in range(0,len(num1),3):
-    # print(i)
-    for j in range(10):
-        if num1[i:i+3] == nums[j]:
-            real1 = real1 + str(j)
-for i in range(0,len(num2),3):
-    for j in range(10):
-        if num2[i:i+3] == nums[j]:  
-            real2 = real2 + str(j)
-ans = ""
-if actual == "+": ans += str(int(real1) + int(real2))
-elif actual == "-": ans += str(int(real1) - int(real2))
-elif actual == "*": ans += str(int(real1) * int(real2))
-else: ans += str(int(real1) / int(real2))
-realans = ""
-for i in range(len(ans)):
-    for j in range(10):
-        if int(ans[i]) == j:
-            realans += nums[j]
-print(realans)
+class Employee:
+    def __init__(self, name, base_salary):
+        self.name = name
+        self.base_salary = base_salary
+    def total_salary(self):
+        return int(self.base_salary)
+class Manager(Employee):
+    def __init__(self, name, base_salary, bonus_percent):
+        super().__init__(name, base_salary)
+        self.bonus_percent = bonus_percent
+    def total_salary(self):
+        return int(self.base_salary) * (1 + int(self.bonus_percent)/100)
+class Developer(Employee):
+    def __init__(self, name, base_salary, completed_projects):
+        super().__init__(name, base_salary)
+        self.completed_projects = completed_projects
+    def total_salary(self):
+        return int(self.base_salary) + int(self.completed_projects) * 500
+class Intern(Employee):
+    def __init__(self, name, base_salary):
+        super().__init__(name, base_salary)
+n = input().split()
+if (n[0] == "Manager"):
+    emp = Manager(n[1],n[2],n[3])
+    sal = emp.total_salary()
+    print(f"Name: {emp.name}, Total: {sal:.2f}")
+elif (n[0] == "Developer"):
+    emp = Developer(n[1],n[2],n[3])
+    sal = emp.total_salary()
+    print(f"Name: {emp.name}, Total: {sal:.2f}")
+else:
+    emp = Intern(n[1], n[2])
+    sal = emp.total_salary()
+    print(f"Name: {emp.name}, Total: {sal:.2f}")
