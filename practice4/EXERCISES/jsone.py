@@ -10,7 +10,7 @@ print("-------------------------------------------------- --------------------  
 for item in data["imdata"]:
     att = item["l1PhysIf"]["attributes"]
     dn = att['dn']
-    desc = att["pathSDescr"]
+    desc = att["descr"]
     speed = att["speed"]
     mtu = att['mtu']
     print(f"{dn:<50} {desc:<20} {speed:<6} {mtu:<6}")
