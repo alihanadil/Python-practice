@@ -10,8 +10,9 @@ print("Today:",y)
 print("Tomorrow:", y+datetime.timedelta(days=1))
 
 # 3 Write a Python program to drop microseconds from datetime.
-z = x.microsecond
-print(z)
+x = datetime.datetime.now()
+x_no_micro = x.replace(microsecond=0)
+print(x_no_micro)   
 
 # 4 Write a Python program to calculate two date difference in seconds.
 a = datetime.datetime(2025, 12, 5, 10, 4, 5)

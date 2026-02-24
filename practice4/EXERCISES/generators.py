@@ -1,11 +1,11 @@
 #1 Create a generator that generates the squares of numbers up to some number N.
-# n = int(input())
-# def square(n):
-#     count = 1
-#     while (count<=n): 
-#         yield count
-#         count +=1
-# for num in square(n): print(num**2)
+n = int(input())
+def square(n):
+    count = 1
+    while (count<=n): 
+        yield count**2
+        count +=1
+for num in square(n): print(num)
 
 #2 Write a program using generator to print the even numbers between 0 and n in comma separated form where n is input from console.
 n = int(input())
