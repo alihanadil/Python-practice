@@ -1,0 +1,5 @@
+n = int(input())
+lst1 = list(map(int, input().split()))
+lst2 = list(map(int, input().split()))
+dot = list(map(lambda x: x[0]*x[1], zip(lst1, lst2)))
+print(sum(dot))
