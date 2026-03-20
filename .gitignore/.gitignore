@@ -1,0 +1,7 @@
+# Database credentials
+database.ini
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
