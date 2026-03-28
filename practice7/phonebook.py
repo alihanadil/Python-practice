@@ -175,14 +175,15 @@ def delete_contact():
         print(error)
 
 def main():
-    print("Insert data with csv (1), insert data with console (2), update data (3), query data (4), delete contact (5)")
+    print("Create the phonebook (1), insert data with csv (2), insert data with console (3), update data (4), query data (5), delete contact (6)")
     try:
         a = int(input())
-        if (a == 1): csv_insert_data()
-        elif (a == 2): insert_data()
-        elif (a == 3): update()
-        elif (a == 4): query_data()
-        elif (a == 5): delete_contact()
+        if (a==1): create_table()
+        elif (a == 2): csv_insert_data()
+        elif (a == 3): insert_data()
+        elif (a == 4): update()
+        elif (a == 5): query_data()
+        elif (a == 6): delete_contact()
         else:
             print("Try again!")
             main()
