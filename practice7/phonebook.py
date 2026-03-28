@@ -4,7 +4,7 @@ from config import load_config
 def create_table():
     """Create the phonebook table if it doesn't exist."""
     commands = (
-        """P
+        """
         CREATE TABLE phonebook (
         id SERIAL PRIMARY KEY,
         username VARCHAR(50) UNIQUE NOT NULL,
@@ -175,21 +175,20 @@ def delete_contact():
         print(error)
 
 def main():
-    print("Create the phonebook (1), insert data with csv (2), insert data with console (3), update data (4), query data (5), delete contact (6)")
-    try:
-        a = int(input())
-        if (a==1): create_table()
-        elif (a == 2): csv_insert_data()
-        elif (a == 3): insert_data()
-        elif (a == 4): update()
-        elif (a == 5): query_data()
-        elif (a == 6): delete_contact()
-        else:
-            print("Try again!")
-            main()
-    except ValueError:
-        print("Try again!")
-        main()
+    while True:
+        print("1. Create table\n2. Insert CSV\n3. Insert console\n4. Update\n5. Query\n6. Delete\n7. Exit")
+        try:
+            a = int(input())
+            if a == 1: create_table()
+            elif a == 2: csv_insert_data()
+            elif a == 3: insert_data()
+            elif a == 4: update()
+            elif a == 5: query_data()
+            elif a == 6: delete_contact()
+            elif a == 7: break
+            else: print("Try again!")
+        except ValueError:
+            print("Please enter a number.")
 
 main()
 
