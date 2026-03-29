@@ -5,7 +5,7 @@ def create_table():
     """Create the phonebook table if it doesn't exist."""
     commands = (
         """
-        CREATE TABLE phonebook (
+        CREATE TABLE IF NOT EXISTS phonebook (
         id SERIAL PRIMARY KEY,
         username VARCHAR(50) UNIQUE NOT NULL,
         phone VARCHAR(20) NOT NULL
@@ -30,7 +30,7 @@ def create_table():
 def insert_data():
     username = input("Enter username: ")
     phone = input("Enter phone: ")
-    sql = """INSERT INTO phonebook (username, phone) VALUES (%s, %s);"""
+    sql = """INSERT INTO phonebook (username, phone) VALUES (%s, %s) ON CONFLICT (username) DO NOTHING;"""
     config = load_config()
     try:
         with  psycopg2.connect(**config) as conn:
@@ -68,24 +68,7 @@ def csv_insert_data():
 def update():
     print("what do you wanna update: Username or Phone? ")
     choice = input()
-    # if (choice == "Username"): 
-    #     print("Original: ")
-    #     u1 = input()
-    #     print("New: ")
-    #     u2 = input()
-    #     sql1 = """ UPDATE phonebook
-    #             SET username = %s
-    #             WHERE username = %s"""
-    # if (choice == "Phone"): 
-    #     print("Original: ")
-    #     u1 = input()
-    #     print("New: ")
-    #     u2 = input()
-    #     sql2 = """ UPDATE phonebook
-    #             SET phone = %s
-    #             WHERE phone = %s"""
     config = load_config()
-
     try:
         with  psycopg2.connect(**config) as conn:
             with  conn.cursor() as cur:
@@ -185,21 +168,23 @@ def main():
             elif a == 4: update()
             elif a == 5: query_data()
             elif a == 6: delete_contact()
-            elif a == 7: break
-            else: print("Try again!")
+            elif a == 7: 
+                return
+            else: 
+                print("Try again!")
+                continue
         except ValueError:
             print("Please enter a number.")
+        print("Would you like to continue? y/n")
+        while (True):
+            a = input()
+            if (a == "y"):
+                break
+            elif (a == "n"): 
+                print("Bye!")
+                return
+            else:
+                print("Try again!")
+        
 
 main()
-
-def more():
-    print("Would you like to continue? y/n")
-    a = input()
-    if (a == "y"):
-        main()
-    elif (a == "n"): print("Bye!")
-    else:
-        print("Try again!")
-        more()
-
-more()
