@@ -44,8 +44,8 @@ def insert_data():
         print(error)
 
 def csv_insert_data():
-    path = r'C:\Users\User\work\practice7\contacts.csv'
-    sql = "COPY phonebook (username, phone) FROM STDIN WITH (FORMAT CSV, HEADER true);"
+    print("Input the csv path")
+    path = input()
     config = load_config()
     try:
         with  psycopg2.connect(**config) as conn:
@@ -56,8 +56,10 @@ def csv_insert_data():
                         phone VARCHAR(20)
                     ) ON COMMIT DROP;
                 """)
-                with open('contacts.csv', 'r') as f:
-                    next(f)
+                with open(path, 'r') as f:
+                    print("does your csv file have header? y/n")
+                    c = input()
+                    if (c == 'y'): next(f)
                     cur.copy_from(f, 'staging', sep=',', columns=('username', 'phone'))
                     cur.execute("INSERT INTO phonebook (username, phone) SELECT username, phone FROM staging ON CONFLICT (username) DO NOTHING;")
             # commit the changes to the database
@@ -81,6 +83,10 @@ def update():
                             SET username = %s
                             WHERE username = %s"""
                     cur.execute(sql1, (u2, u1))
+                    if cur.rowcount > 0:
+                        print("Update successful.")
+                    else:
+                        print("No matching record found.")
                 if (choice == "Phone"): 
                     print("Original: ", end="")
                     u1 = input()
@@ -90,6 +96,11 @@ def update():
                             SET phone = %s
                             WHERE phone = %s"""
                     cur.execute(sql2, (u2, u1))
+                    if cur.rowcount > 0:
+                        print("Update successful.")
+                    else:
+                        print("No matching record found.")
+                
 
             # commit the changes to the database
             conn.commit()
@@ -188,3 +199,8 @@ def main():
         
 
 main()
+
+# To reset the auto‑increment sequence so that new rows receive the next consecutive ID 
+# after the current maximum, you can use the following SQL command:
+
+# SELECT setval('phonebook_id_seq', (SELECT COALESCE(MAX(id), 0) FROM phonebook));
