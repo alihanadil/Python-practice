@@ -1,0 +1,17 @@
+# if (h < 10):
+#         if (m < 10):
+#             if (s < 10):
+#                 start = font.render(f"0{h:.0f}:0{m:.0f}:0{s:.0f}", True, BLACK)
+#             else:
+#                 start = font.render(f"0{h:.0f}:0{m:.0f}:{s:.0f}", True, BLACK)
+#         elif (s < 10):
+#             start = font.render(f"0{h:.0f}:{m:.0f}:0{s:.0f}", True, BLACK)
+#         else:
+#             start = font.render(f"0{h:.0f}:{m:.0f}:{s:.0f}", True, BLACK)
+#     elif (m < 10):
+#         if (s < 10):
+#             start = font.render(f"{h:.0f}:0{m:.0f}:0{s:.0f}", True, BLACK)
+#         else:
+#             start = font.render(f"{h:.0f}:0{m:.0f}:{s:.0f}", True, BLACK)
+#     else:
+#         start = font.render(f"{h:.0f}:{m:.0f}:{s:.0f}", True, BLACK)
