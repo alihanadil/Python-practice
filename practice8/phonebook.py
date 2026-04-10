@@ -100,7 +100,7 @@ def delete_contact():
 def match_return():
     print("Write the username or phone part that you want to match.")
     a = input()
-    sql = "SELECT * FROM records(%s)"
+    sql = "SELECT * FROM records(%s) ORDER BY out_id"
     config = load_config()
     try:
         with psycopg2.connect(**config) as conn:
@@ -119,7 +119,7 @@ def pages():
     print("Write the limit of the returned query and how much offset you want it to be.")
     lim = int(input())
     offs = int(input())
-    sql = "SELECT * FROM pagination(%s, %s)"
+    sql = "SELECT * FROM pagination(%s, %s) ORDER BY out_id"
     config = load_config()
     try:
         with psycopg2.connect(**config) as conn:
