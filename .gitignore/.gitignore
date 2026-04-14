@@ -5,3 +5,5 @@ database.ini
 venv/
 __pycache__/
 *.pyc
+
+practice9/music_player/music
