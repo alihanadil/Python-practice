@@ -1,4 +1,4 @@
--- A procedure to insert a new user by name and phone; if the user already exists, update their phone
+ -- A procedure to insert a new user by name and phone; if the user already exists, update their phone
 CREATE OR REPLACE PROCEDURE upsert_u(p_name VARCHAR, p_phone VARCHAR)
 LANGUAGE plpgsql AS $$
 BEGIN

@@ -9,8 +9,8 @@ WHITE = (255, 255, 255)
 base = r'C:\Users\User\work\practice9\mickeys_clock\images'
 image_surface = pygame.image.load(os.path.join(base, 'clock.png')).convert_alpha()
 mickey      = pygame.image.load(os.path.join(base, 'mUmrP.png')).convert_alpha()
-hand_l      = pygame.image.load(os.path.join(base, 'hand_left.png')).convert_alpha()
-hand_r      = pygame.image.load(os.path.join(base, 'hand_right.png')).convert_alpha()
+hand_l      = pygame.image.load(os.path.join(base, 'hand_left_centered.png')).convert_alpha()
+hand_r      = pygame.image.load(os.path.join(base, 'hand_right_centered.png')).convert_alpha()
 
 resized_image = pygame.transform.scale(image_surface, (800, 600))
 res_mickey    = pygame.transform.scale(mickey, (350, 350))
@@ -43,8 +43,8 @@ while not done:
     rotated_hours   = pygame.transform.rotate(hand_r_base, hours_angle)
 
 
-    minutes_rect = rotated_minutes.get_rect(center=(620, 300))
-    hours_rect   = rotated_hours.get_rect(center=(620,346))
+    minutes_rect = rotated_minutes.get_rect(center=(600, 340))
+    hours_rect   = rotated_hours.get_rect(center=(600,340))
 
     # Draw everything
     screen.fill(WHITE)
