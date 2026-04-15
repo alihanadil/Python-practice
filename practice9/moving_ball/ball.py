@@ -7,8 +7,6 @@ RED = (255, 0, 0)
 
 done = False
 
-
-
 clock = pygame.time.Clock()
 
 circle_start_w = 600
