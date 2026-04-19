@@ -10,8 +10,11 @@ def main():
     mode = 'blue'
     points = []
     strokes = [] 
+    figures = []
+    figures_perm = []
     drawing = True
     drawing_mode = 1
+    fig_start = 0
     text = """
             P = Stop/Draw
             Z = Draw rectangle
@@ -59,13 +62,20 @@ def main():
                     drawing_mode = 3 
                 elif event.key == pygame.K_a:
                     strokes = []
-                    points = []                      
+                    points = [] 
+                    figures_perm = []  
+            
+                    
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # left click grows radius
+                    if drawing_mode in (2,3):
+                        fig_start = mouse_pos
                     radius = min(200, radius + 1)
                     
-                    if points:   
-                        strokes.append((points.copy(), mode, radius))
+                    if drawing_mode == 1:
+                        if points:   
+                            strokes.append((points.copy(), mode, radius))
                     points = []   # start a new continuous line
                     
                 elif event.button == 3: # right click shrinks radius
@@ -88,16 +98,24 @@ def main():
                         strokes.append((points.copy(), mode, radius))
                     points = []   # start a new continuous line
             if event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1 and points:
-                    strokes.append((points.copy(), mode, radius))
-                    points = []
+                if event.button == 1 and (points or figures):
+                    if drawing_mode == 1:
+                        strokes.append((points.copy(), mode, radius))
+                        points = []
+                    if drawing_mode in (2,3 ):
+                        figures_perm.append((figures.copy(), mode, radius, drawing_mode))
+                        figures = []
+                
                     
             
             if event.type == pygame.MOUSEMOTION:
                 if event.buttons[0]:   # Left mouse button is held
-                    position = event.pos
-                    points = points + [position]
-                    points = points[-256:]
+                    if drawing_mode == 1:
+                        position = event.pos
+                        points = points + [position]
+                        points = points[-256:]
+                    if drawing_mode in (2,3 ):
+                        figures = [(fig_start, mouse_pos)]
                 
                 
         screen.fill((0, 0, 0))
@@ -105,14 +123,22 @@ def main():
         
 
         # --- Draw all saved strokes ---
-        for pts, col_mode, rad, d_mode in strokes:
+        for pts, col_mode, rad in strokes:
             for i in range(len(pts) - 1):
                 drawLineBetween(screen, i, pts[i], pts[i+1], rad, col_mode)
+        
+        for coords, col_mode, rad, d_mode in figures_perm:
+            st, et = coords[0]
+            drawfig(screen, 0, st, et, rad, col_mode,d_mode)
 
         # --- Draw the current stroke (if drawing is enabled) ---
         if drawing:
-            for i in range(len(points) - 1):
-                drawLineBetween(screen, i, points[i], points[i+1], radius, mode)
+            if drawing_mode == 1:
+                for i in range(len(points) - 1):
+                    drawLineBetween(screen, i, points[i], points[i+1], radius, mode)
+            elif drawing_mode in (2,3) and figures:
+                s,e = figures[0]
+                drawfig(screen, 0, s, e, radius, mode, drawing_mode)
             
         font = pygame.font.SysFont(None, 26)
         p_text = font.render(text, True, (255, 255, 255))
@@ -124,6 +150,32 @@ def main():
         pygame.display.flip()
         
         clock.tick(60)
+
+def drawfig(screen, index, start, end, width, color_mode, draw_mode):
+    x1, y1 = start
+    x2, y2 = end
+    r = int(((x2-x1)**2 + (y2-y1)**2) ** 0.5 / 2)
+    c1 = max(0, min(255, r - 256))
+    c2 = max(0, min(255, r))
+    if color_mode == 'blue':
+        color = (c1, c1, c2)
+    elif color_mode == 'red':
+        color = (c2, c1, c1)
+    elif color_mode == 'green':
+        color = (c1, c2, c1)
+    elif color_mode == 'erase':
+        color = (0,0,0)
+    
+    
+    if draw_mode == 2:
+        rect = pygame.Rect(min(x1,x2), min(y1,y2), abs(x2-x1), abs(y2-y1))
+        pygame.draw.rect(screen, color, rect, width)
+    elif draw_mode == 3:
+        cx = (x1 + x2) // 2
+        cy = (y1 + y2) // 2
+        r = int(((x2-x1)**2 + (y2-y1)**2) ** 0.5 / 2)
+        pygame.draw.circle(screen, color, (cx, cy), max(1, r), width)
+
 
 def drawLineBetween(screen, index, start, end, width, color_mode):
     c1 = max(0, min(255, 2 * index - 256))
