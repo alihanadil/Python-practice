@@ -6,6 +6,8 @@ pygame.init() # initializes all the pygame sub-modules
 
 WIDTH = 400
 HEIGHT = 600
+last_speedup = 0
+N = 5  # speed up every 5 points
 screen = pygame.display.set_mode((WIDTH, HEIGHT)) # creating a game window
 # set_mode() takes a tuple as an argument
 
@@ -73,15 +75,19 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = coin_image
-        self.image = pygame.transform.scale(self.image, (50, 50))
+        self.size = random.randint(1,3)
+        self.image = pygame.transform.scale(self.image, (30*(self.size*0.5), 30*(self.size*0.5)))
         self.rect = self.image.get_rect()  
         self.generate_random_rect()       
 
     def generate_random_rect(self): # generating random position
         # random x, but keep it within screen width
+        self.size = random.randint(1,3)
+        self.image = coin_image
+        self.image = pygame.transform.scale(self.image, (30*(self.size*0.5), 30*(self.size*0.5))) # resize depending on the size of the coin
         self.rect.left = random.randint(0, WIDTH - self.rect.w)
         # fixed y near the bottom where the player moves
-        self.rect.top = HEIGHT - 80
+        self.rect.top = random.randint(HEIGHT - 80, HEIGHT - 20)
 
 running = True
 
@@ -107,16 +113,19 @@ while running: # game loop
     player.move()
     screen.blit(image_background, (0, 0))
     screen.blit(score, score_rect)
-    for entity in all_sprites:
+    for entity in all_sprites: # moves enemies
         if not isinstance(entity, Coin):
             entity.move()
         screen.blit(entity.image, entity.rect)
 
     if pygame.sprite.spritecollideany(player, coin_sprites):
-        collected +=1
+        collected += coin.size # addition of points based on coin size
+        if collected // N > last_speedup:
+            enemy.speed += 3          # fixed, controlled bump
+            last_speedup = collected // N
         coin.generate_random_rect()
 
-    if pygame.sprite.spritecollideany(player, enemy_sprites):
+    if pygame.sprite.spritecollideany(player, enemy_sprites): # collision with enemy, end the game
         sound_crash.play()
         time.sleep(1)
 

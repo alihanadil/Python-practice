@@ -9,9 +9,8 @@ def main():
     radius = 15
     mode = 'blue'
     points = []
-    strokes = [] 
+    history = []  # unified draw order: ('stroke', pts, mode, radius) or ('figure', coords, mode, radius, d_mode)
     figures = []
-    figures_perm = []
     drawing = True
     drawing_mode = 1
     fig_start = 0
@@ -52,7 +51,7 @@ def main():
                 elif event.key == pygame.K_c:
                     mode = 'erase'
                     if points:   
-                        strokes.append((points.copy(), mode, radius))
+                        history.append(('stroke', points.copy(), mode, radius))
                     points = []   # start a new continuous line
                 elif event.key == pygame.K_l:
                     drawing_mode = 1
@@ -61,9 +60,9 @@ def main():
                 elif event.key == pygame.K_x:
                     drawing_mode = 3 
                 elif event.key == pygame.K_a:
-                    strokes = []
-                    points = [] 
-                    figures_perm = []  
+                    history = []
+                    points = []
+                    figures = []
             
                     
 
@@ -75,7 +74,7 @@ def main():
                     
                     if drawing_mode == 1:
                         if points:   
-                            strokes.append((points.copy(), mode, radius))
+                            history.append(('stroke', points.copy(), mode, radius))
                     points = []   # start a new continuous line
                     
                 elif event.button == 3: # right click shrinks radius
@@ -85,59 +84,58 @@ def main():
                 if r.collidepoint(mouse_pos):
                     mode = 'red'
                     if points:   
-                        strokes.append((points.copy(), mode, radius))
+                        history.append(('stroke', points.copy(), mode, radius))
                     points = []   # start a new continuous line
                 elif g.collidepoint(mouse_pos):
                     mode = 'green'
                     if points:   
-                        strokes.append((points.copy(), mode, radius))
+                        history.append(('stroke', points.copy(), mode, radius))
                     points = []   # start a new continuous line
                 elif b.collidepoint(mouse_pos):
                     mode = 'blue'
                     if points:   
-                        strokes.append((points.copy(), mode, radius))
+                        history.append(('stroke', points.copy(), mode, radius))
                     points = []   # start a new continuous line
+
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1 and (points or figures):
                     if drawing_mode == 1:
-                        strokes.append((points.copy(), mode, radius))
+                        history.append(('stroke', points.copy(), mode, radius))
                         points = []
-                    if drawing_mode in (2,3 ):
-                        figures_perm.append((figures.copy(), mode, radius, drawing_mode))
+                    if drawing_mode in (2, 3):
+                        history.append(('figure', figures.copy(), mode, radius, drawing_mode))
                         figures = []
                 
-                    
-            
             if event.type == pygame.MOUSEMOTION:
                 if event.buttons[0]:   # Left mouse button is held
                     if drawing_mode == 1:
                         position = event.pos
                         points = points + [position]
                         points = points[-256:]
-                    if drawing_mode in (2,3 ):
+                    if drawing_mode in (2, 3):
                         figures = [(fig_start, mouse_pos)]
                 
                 
         screen.fill((0, 0, 0))
 
-        
-
-        # --- Draw all saved strokes ---
-        for pts, col_mode, rad in strokes:
-            for i in range(len(pts) - 1):
-                drawLineBetween(screen, i, pts[i], pts[i+1], rad, col_mode)
-        
-        for coords, col_mode, rad, d_mode in figures_perm:
-            st, et = coords[0]
-            drawfig(screen, 0, st, et, rad, col_mode,d_mode)
+        # --- Draw all history in creation order ---
+        for entry in history:
+            if entry[0] == 'stroke':
+                _, pts, col_mode, rad = entry
+                for i in range(len(pts) - 1):
+                    drawLineBetween(screen, i, pts[i], pts[i+1], rad, col_mode)
+            elif entry[0] == 'figure':
+                _, coords, col_mode, rad, d_mode = entry
+                st, et = coords[0]
+                drawfig(screen, 0, st, et, rad, col_mode, d_mode)
 
         # --- Draw the current stroke (if drawing is enabled) ---
         if drawing:
             if drawing_mode == 1:
                 for i in range(len(points) - 1):
                     drawLineBetween(screen, i, points[i], points[i+1], radius, mode)
-            elif drawing_mode in (2,3) and figures:
-                s,e = figures[0]
+            elif drawing_mode in (2, 3) and figures:
+                s, e = figures[0]
                 drawfig(screen, 0, s, e, radius, mode, drawing_mode)
             
         font = pygame.font.SysFont(None, 26)
@@ -164,8 +162,7 @@ def drawfig(screen, index, start, end, width, color_mode, draw_mode):
     elif color_mode == 'green':
         color = (c1, c2, c1)
     elif color_mode == 'erase':
-        color = (0,0,0)
-    
+        color = (0, 0, 0)
     
     if draw_mode == 2:
         rect = pygame.Rect(min(x1,x2), min(y1,y2), abs(x2-x1), abs(y2-y1))
@@ -188,7 +185,7 @@ def drawLineBetween(screen, index, start, end, width, color_mode):
     elif color_mode == 'green':
         color = (c1, c2, c1)
     elif color_mode == 'erase':
-        color = (0,0,0)
+        color = (0, 0, 0)
     
     dx = start[0] - end[0]
     dy = start[1] - end[1]
