@@ -81,7 +81,7 @@ class Coin(pygame.sprite.Sprite):
         self.rect.left = random.randint(0, WIDTH - self.rect.w)
         self.rect.top  = random.randint(HEIGHT - 80, HEIGHT - 20)
 
-#  new: road obstacle (oil spill / pothole) 
+# road obstacle (oil spill / pothole) 
 
 class Obstacle(pygame.sprite.Sprite):
     # kinds: "oil" slows, "barrier" instant game-over (like enemy)
@@ -110,7 +110,7 @@ class Obstacle(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT:
             self._spawn()
 
-#  new: nitro strip (speed boost lane event) 
+# nitro strip (speed boost lane event) 
 
 class NitroStrip(pygame.sprite.Sprite):
     def __init__(self):
@@ -124,7 +124,7 @@ class NitroStrip(pygame.sprite.Sprite):
     def move(self):
         self.rect.move_ip(0, self.speed)
 
-#  new: collectible power-up sprite 
+# collectible power-up sprite 
 
 POWERUP_COLORS = {"nitro": (255, 160, 0), "shield": (80, 80, 255), "repair": (0, 200, 80)}
 

@@ -4,7 +4,7 @@ import json
 from color_palette import *
 from config import *
 
-# ── Settings helpers ──────────────────────────────────────────────────────────
+# ── Settings helpers ─────────────
 
 def load_settings():
     try:
@@ -17,7 +17,7 @@ def save_settings(settings):
     with open("settings.json", "w") as f:
         json.dump(settings, f, indent=4)
 
-# ── Grid drawing (original, unchanged) ────────────────────────────────────────
+# ── Grid drawing (original, unchanged) 
 
 def draw_grid(screen):
     for i in range(HEIGHT // CELL):
@@ -25,7 +25,7 @@ def draw_grid(screen):
             if j != 0:
                 pygame.draw.rect(screen, colorGRAY, (i * CELL, j * CELL, CELL, CELL), 1)
 
-# ── Point (original, unchanged) ───────────────────────────────────────────────
+# ── Point (original, unchanged) ──
 
 class Point:
     def __init__(self, x, y):
@@ -35,7 +35,7 @@ class Point:
     def __str__(self):
         return f"{self.x}, {self.y}"
 
-# ── Snake (original + shield/color support) ───────────────────────────────────
+# ── Snake (original + shield/color support) ───────────────
 
 class Snake:
     def __init__(self, color=None):
@@ -115,7 +115,7 @@ class Snake:
             return max(2, base - 3)
         return base
 
-# ── Food (original + poison type) ─────────────────────────────────────────────
+# ── Food (original + poison type) 
 
 class Food:
     NORMAL_COLORS = [colorGREEN, colorBLUE, colorRED]
@@ -149,7 +149,7 @@ class Food:
                 self.pos.y = y
                 break
 
-# ── Power-ups ─────────────────────────────────────────────────────────────────
+# ── Power-ups 
 
 POWERUP_TYPES = ["speed", "slow", "shield"]
 POWERUP_COLORS = {
@@ -190,7 +190,7 @@ class PowerUp:
         elif self.kind == "shield":
             snake.shield_active = True
 
-# ── Obstacles ─────────────────────────────────────────────────────────────────
+# ── Obstacles 
 
 class Obstacle:
     def __init__(self, x, y):
@@ -219,7 +219,7 @@ def generate_obstacles(level, snake_body, count=None):
             blocked.add((x, y))
     return obstacles
 
-# ── HUD ───────────────────────────────────────────────────────────────────────
+# ── HUD ──────
 
 def draw_hud(screen, font, snake, personal_best, powerup=None):
     now = pygame.time.get_ticks()

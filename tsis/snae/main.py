@@ -21,7 +21,7 @@ clock = pygame.time.Clock()
 # ── Try to init DB (silently fails if no Postgres available) ──────────────────
 DB_OK = db.init_db()
 
-# ── Shared helpers ─────────────────────────────────────────────────────────────
+# ── Shared helpers 
 
 def draw_button(text, rect, hover=False):
     color = (80, 80, 80) if not hover else (120, 120, 120)
@@ -58,7 +58,7 @@ def text_input_screen(prompt):
                 elif len(text) < 20 and event.unicode.isprintable():
                     text += event.unicode
 
-# ── Main Menu ─────────────────────────────────────────────────────────────────
+# ── Main Menu ────
 
 def main_menu():
     buttons = {
@@ -113,7 +113,7 @@ def leaderboard_screen():
                 if back_btn.collidepoint(mx, my):
                     return
 
-# ── Settings Screen ───────────────────────────────────────────────────────────
+# ── Settings Screen 
 
 COLOR_OPTIONS = [
     ("Green",  [0, 255, 0]),
@@ -303,7 +303,7 @@ def play_game(username):
 
     return snake.score, snake.level, personal_best
 
-# ── Entry Point ───────────────────────────────────────────────────────────────
+# ── Entry Point ──
 
 def main():
     username = text_input_screen("Enter your username:")
