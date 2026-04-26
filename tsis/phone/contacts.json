@@ -1,0 +1,90 @@
+[
+  {
+    "username": "Aigerim",
+    "email": "aigerim@mail.ru",
+    "birthday": "1995-08-22",
+    "group": "Family",
+    "phones": [
+      {
+        "phone": "+777123456",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "username": "Alihan",
+    "email": "alihan@gmail.com",
+    "birthday": "1990-05-15",
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "+9814512",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Alor",
+    "email": null,
+    "birthday": null,
+    "group": null,
+    "phones": [
+      {
+        "phone": "+99594",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "username": "Bob",
+    "email": "bob@gmail.com",
+    "birthday": "1988-03-10",
+    "group": "Work",
+    "phones": [
+      {
+        "phone": "+123456789",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "username": "Charlie",
+    "email": "charlie@outlook.com",
+    "birthday": null,
+    "group": "Other",
+    "phones": [
+      {
+        "phone": "+987654321",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Dana",
+    "email": "dana@company.kz",
+    "birthday": "2000-12-01",
+    "group": "Work",
+    "phones": [
+      {
+        "phone": "+555666777",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "username": "Palo",
+    "email": null,
+    "birthday": null,
+    "group": null,
+    "phones": [
+      {
+        "phone": "+65954",
+        "type": "mobile"
+      },
+      {
+        "phone": "+66211425",
+        "type": "home"
+      }
+    ]
+  }
+]
